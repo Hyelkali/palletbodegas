@@ -19,35 +19,44 @@ const Viewers = () => {
   useEffect(() => {
     // Get visitor statistics
     const fetchStats = async () => {
-      const visitorStats = await getVisitorStats()
-      setStats(visitorStats)
+      try {
+        const visitorStats = await getVisitorStats()
+        setStats(visitorStats)
+      } catch (error) {
+        console.error("Error fetching stats:", error)
+      }
     }
 
     fetchStats()
 
     // Set up real-time listener for visitors
-    const visitorsRef = collection(db, "visitors")
-    const visitorsQuery = query(visitorsRef, orderBy("timestamp", "desc"), limit(100))
+    try {
+      const visitorsRef = collection(db, "visitors")
+      const visitorsQuery = query(visitorsRef, orderBy("timestamp", "desc"), limit(100))
 
-    const unsubscribe = onSnapshot(
-      visitorsQuery,
-      (snapshot) => {
-        const visitorData = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-          timestamp: doc.data().timestamp?.toDate() || new Date(),
-        }))
+      const unsubscribe = onSnapshot(
+        visitorsQuery,
+        (snapshot) => {
+          const visitorData = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+            timestamp: doc.data().timestamp?.toDate() || new Date(),
+          }))
 
-        setVisitors(visitorData)
-        setLoading(false)
-      },
-      (error) => {
-        console.error("Error fetching visitors:", error)
-        setLoading(false)
-      },
-    )
+          setVisitors(visitorData)
+          setLoading(false)
+        },
+        (error) => {
+          console.error("Error fetching visitors:", error)
+          setLoading(false)
+        },
+      )
 
-    return () => unsubscribe()
+      return () => unsubscribe()
+    } catch (error) {
+      console.error("Error setting up visitor listener:", error)
+      setLoading(false)
+    }
   }, [])
 
   // Format date for display
@@ -105,10 +114,10 @@ const Viewers = () => {
                 {visitors.map((visitor) => (
                   <tr key={visitor.id}>
                     <td>{formatDate(visitor.timestamp)}</td>
-                    <td>{visitor.ip}</td>
-                    <td>{visitor.location}</td>
-                    <td>{visitor.page}</td>
-                    <td>{visitor.device}</td>
+                    <td>{visitor.ip || "Unknown"}</td>
+                    <td>{visitor.location || "Unknown"}</td>
+                    <td>{visitor.page || "/"}</td>
+                    <td>{visitor.device || "Unknown"}</td>
                     <td>{visitor.referrer || "Direct"}</td>
                   </tr>
                 ))}

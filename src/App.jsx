@@ -1,25 +1,25 @@
 "use client"
 
-import { Routes, Route, Navigate } from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
 import Layout from "./components/Layout"
 import AdminLayout from "./components/admin/AdminLayout"
 import ProtectedRoute from "./components/ProtectedRoute"
-import Home from "./pages/Home.jsx"
-import Catalog from "./pages/Catalog.jsx"
-import Contact from "./pages/Contact.jsx"
-import TodaysDeals from "./pages/TodaysDeals.jsx"
-import ProductDetail from "./pages/ProductDetail.jsx"
-import Cart from "./pages/Cart.jsx"
-import Login from "./pages/Login.jsx"
-import Register from "./pages/Register.jsx"
-import ForgotPassword from "./pages/ForgotPassword.jsx"
-import NotFound from "./pages/NotFound.jsx"
-import Support from "./pages/Support.jsx"
-import Checkout from "./pages/Checkout.jsx"
-import ThankYou from "./pages/ThankYou.jsx"
-import AdminOrders from "./pages/admin/Orders.jsx"
-import Viewers from "./components/admin/Viewers.jsx"
-import AdminSetup from "./pages/AdminSetup.jsx"
+import Home from "./pages/Home"
+import Catalog from "./pages/Catalog"
+import Contact from "./pages/Contact"
+import TodaysDeals from "./pages/TodaysDeals"
+import ProductDetail from "./pages/ProductDetail"
+import Cart from "./pages/Cart"
+import Login from "./pages/Login"
+import Register from "./pages/Register"
+import ForgotPassword from "./pages/ForgotPassword"
+import NotFound from "./pages/NotFound"
+import Support from "./pages/Support"
+import Checkout from "./pages/Checkout"
+import ThankYou from "./pages/ThankYou"
+import AdminOrders from "./pages/admin/Orders"
+import Viewers from "./components/admin/Viewers"
+import AdminSetup from "./pages/AdminSetup"
 import { useAuth } from "./context/AuthContext"
 import { useEffect } from "react"
 import { initVisitorTracking } from "./services/visitorService"
@@ -29,7 +29,11 @@ function App() {
 
   // Initialize visitor tracking
   useEffect(() => {
-    initVisitorTracking()
+    try {
+      initVisitorTracking()
+    } catch (error) {
+      console.error("Error initializing visitor tracking:", error)
+    }
   }, [])
 
   return (
@@ -55,7 +59,7 @@ function App() {
       {/* Admin Routes */}
       <Route element={<ProtectedRoute requireAdmin={true} />}>
         <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Navigate to="/admin/orders" replace />} />
+          <Route index element={<AdminOrders />} />
           <Route path="orders" element={<AdminOrders />} />
           <Route path="viewers" element={<Viewers />} />
         </Route>

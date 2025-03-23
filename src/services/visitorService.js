@@ -1,127 +1,99 @@
-import { collection, addDoc, query, where, getDocs, orderBy, Timestamp } from "firebase/firestore"
+import { collection, addDoc, serverTimestamp, query, getDocs, orderBy } from "firebase/firestore"
 import { db } from "../firebase/config"
 
-// Track a page visit
-export const trackVisitor = async (page = window.location.pathname) => {
+// Initialize a throttle map to prevent too many records for the same user/page
+const throttleMap = new Map()
+const THROTTLE_TIME = 5 * 60 * 1000 // 5 minutes in milliseconds
+
+// Initialize visitor tracking
+export const initVisitorTracking = () => {
+  // Track initial page load
+  trackVisitor(window.location.pathname)
+
+  // Set up history change listener for SPA navigation
+  const originalPushState = history.pushState
+  const originalReplaceState = history.replaceState
+
+  history.pushState = function () {
+    originalPushState.apply(this, arguments)
+    trackPageChange()
+  }
+
+  history.replaceState = function () {
+    originalReplaceState.apply(this, arguments)
+    trackPageChange()
+  }
+
+  window.addEventListener("popstate", trackPageChange)
+
+  // Track page changes
+  function trackPageChange() {
+    trackVisitor(window.location.pathname)
+  }
+}
+
+// Track a visitor
+export const trackVisitor = async (page) => {
   try {
     // Get visitor information
-    const visitorData = await getVisitorInfo()
+    const visitorInfo = await getVisitorInfo(page)
 
-    // Add page information
-    visitorData.page = page
-    visitorData.timestamp = Timestamp.now()
-    visitorData.referrer = document.referrer || "Direct"
+    // Check throttle to avoid too many records for the same user/page
+    const throttleKey = `${visitorInfo.ip}-${page}`
+    const lastRecord = throttleMap.get(throttleKey)
+    const now = Date.now()
+
+    if (lastRecord && now - lastRecord < THROTTLE_TIME) {
+      console.log("Visitor tracking throttled for", throttleKey)
+      return visitorInfo
+    }
+
+    // Update throttle map
+    throttleMap.set(throttleKey, now)
 
     // Save to Firestore
-    await addDoc(collection(db, "visitors"), visitorData)
+    await addDoc(collection(db, "visitors"), {
+      ...visitorInfo,
+      timestamp: serverTimestamp(),
+    })
 
-    console.log("Visit tracked:", visitorData)
-    return visitorData
+    console.log("Visitor tracked:", visitorInfo)
+    return visitorInfo
   } catch (error) {
     console.error("Error tracking visitor:", error)
     return {
-      ip: "Unknown",
-      location: "Unknown",
-      device: getBrowserInfo(),
-      browser: navigator.userAgent,
+      ip: "unknown",
+      location: "unknown",
       page,
-      timestamp: Timestamp.now(),
-      referrer: document.referrer || "Direct",
-    }
-  }
-}
-
-// Get visitor information including IP and location
-const getVisitorInfo = async () => {
-  try {
-    // Use ipapi.co to get IP and location (free tier)
-    const response = await fetch("https://ipapi.co/json/")
-    const data = await response.json()
-
-    return {
-      ip: data.ip || "Unknown",
-      location: data.city && data.country ? `${data.city}, ${data.country}` : "Unknown",
-      region: data.region || "Unknown",
-      country: data.country_name || "Unknown",
-      latitude: data.latitude,
-      longitude: data.longitude,
       device: getBrowserInfo(),
-      browser: navigator.userAgent,
-    }
-  } catch (error) {
-    console.error("Error getting visitor info:", error)
-    return {
-      ip: "Unknown",
-      location: "Unknown",
-      device: getBrowserInfo(),
-      browser: navigator.userAgent,
+      timestamp: new Date(),
     }
   }
-}
-
-// Get browser and device information
-const getBrowserInfo = () => {
-  const userAgent = navigator.userAgent
-
-  // Detect mobile devices
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)
-
-  // Detect browser
-  let browserName = "Unknown"
-  if (userAgent.indexOf("Firefox") > -1) {
-    browserName = "Firefox"
-  } else if (userAgent.indexOf("SamsungBrowser") > -1) {
-    browserName = "Samsung Browser"
-  } else if (userAgent.indexOf("Opera") > -1 || userAgent.indexOf("OPR") > -1) {
-    browserName = "Opera"
-  } else if (userAgent.indexOf("Trident") > -1) {
-    browserName = "Internet Explorer"
-  } else if (userAgent.indexOf("Edge") > -1) {
-    browserName = "Edge"
-  } else if (userAgent.indexOf("Chrome") > -1) {
-    browserName = "Chrome"
-  } else if (userAgent.indexOf("Safari") > -1) {
-    browserName = "Safari"
-  }
-
-  return isMobile ? `Mobile (${browserName})` : `Desktop (${browserName})`
 }
 
 // Get visitor statistics
 export const getVisitorStats = async () => {
   try {
     const visitorsRef = collection(db, "visitors")
+    const visitorDocs = await getDocs(query(visitorsRef, orderBy("timestamp", "desc")))
 
-    // Get total visits
-    const totalVisitsQuery = query(visitorsRef)
-    const totalVisitsSnapshot = await getDocs(totalVisitsQuery)
-    const totalVisits = totalVisitsSnapshot.size
+    const visitors = visitorDocs.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+      timestamp: doc.data().timestamp?.toDate() || new Date(),
+    }))
 
-    // Get today's visits
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
-    const todayTimestamp = Timestamp.fromDate(today)
+    // Calculate statistics
+    const now = new Date()
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    const lastWeek = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
 
-    const todayVisitsQuery = query(visitorsRef, where("timestamp", ">=", todayTimestamp))
-    const todayVisitsSnapshot = await getDocs(todayVisitsQuery)
-    const todayVisits = todayVisitsSnapshot.size
-
-    // Get last 7 days visits
-    const lastWeek = new Date()
-    lastWeek.setDate(lastWeek.getDate() - 7)
-    lastWeek.setHours(0, 0, 0, 0)
-    const lastWeekTimestamp = Timestamp.fromDate(lastWeek)
-
-    const weekVisitsQuery = query(visitorsRef, where("timestamp", ">=", lastWeekTimestamp))
-    const weekVisitsSnapshot = await getDocs(weekVisitsQuery)
-    const weekVisits = weekVisitsSnapshot.size
-
-    // Get unique IPs
-    const allVisits = totalVisitsSnapshot.docs.map((doc) => doc.data())
-    const uniqueIPs = new Set(allVisits.map((visit) => visit.ip)).size
+    const todayVisits = visitors.filter((v) => v.timestamp >= today).length
+    const weekVisits = visitors.filter((v) => v.timestamp >= lastWeek).length
+    const uniqueIPs = new Set(visitors.map((v) => v.ip)).size
 
     return {
-      totalVisits,
+      totalVisits: visitors.length,
       todayVisits,
       weekVisits,
       uniqueIPs,
@@ -137,41 +109,58 @@ export const getVisitorStats = async () => {
   }
 }
 
-// Get recent visitors
-export const getRecentVisitors = async (limit = 50) => {
+// Get visitor information
+const getVisitorInfo = async (page) => {
   try {
-    const visitorsRef = collection(db, "visitors")
+    // Get IP and location info from ipapi.co (free API)
+    const response = await fetch("https://ipapi.co/json/")
+    const data = await response.json()
 
-    const recentVisitorsQuery = query(visitorsRef, orderBy("timestamp", "desc"), limit(limit))
-
-    const snapshot = await getDocs(recentVisitorsQuery)
-
-    return snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-      timestamp: doc.data().timestamp.toDate(),
-    }))
+    return {
+      ip: data.ip || "unknown",
+      location: data.city && data.country ? `${data.city}, ${data.country}` : "unknown",
+      page,
+      device: getBrowserInfo(),
+      referrer: document.referrer || "direct",
+      timestamp: new Date(),
+    }
   } catch (error) {
-    console.error("Error getting recent visitors:", error)
-    return []
+    console.error("Error getting visitor info:", error)
+    return {
+      ip: "unknown",
+      location: "unknown",
+      page,
+      device: getBrowserInfo(),
+      referrer: document.referrer || "direct",
+      timestamp: new Date(),
+    }
   }
 }
 
-// Initialize tracking on page load
-export const initVisitorTracking = () => {
-  // Track initial page load
-  trackVisitor()
+// Get browser and device information
+const getBrowserInfo = () => {
+  const ua = navigator.userAgent
+  let browser = "Unknown"
+  let device = "Unknown"
 
-  // Track page changes (for single page apps)
-  let lastTrackedPath = window.location.pathname
+  // Detect browser
+  if (ua.indexOf("Chrome") > -1) browser = "Chrome"
+  else if (ua.indexOf("Safari") > -1) browser = "Safari"
+  else if (ua.indexOf("Firefox") > -1) browser = "Firefox"
+  else if (ua.indexOf("MSIE") > -1 || ua.indexOf("Trident") > -1) browser = "Internet Explorer"
+  else if (ua.indexOf("Edge") > -1) browser = "Edge"
 
-  // Check for path changes every 2 seconds
-  setInterval(() => {
-    const currentPath = window.location.pathname
-    if (currentPath !== lastTrackedPath) {
-      trackVisitor(currentPath)
-      lastTrackedPath = currentPath
-    }
-  }, 2000)
+  // Detect device type
+  if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+    device = "Tablet"
+  } else if (
+    /Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)
+  ) {
+    device = "Mobile"
+  } else {
+    device = "Desktop"
+  }
+
+  return `${device} - ${browser}`
 }
 
