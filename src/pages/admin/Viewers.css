@@ -4,7 +4,6 @@
 
 .viewers-container h1 {
   margin-bottom: 20px;
-  color: #333;
 }
 
 .stats-cards {
@@ -15,7 +14,7 @@
 }
 
 .stat-card {
-  background-color: #fff;
+  background-color: #f8f9fa;
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -26,28 +25,22 @@
   margin-top: 0;
   margin-bottom: 10px;
   font-size: 16px;
-  color: #666;
+  color: #555;
 }
 
 .stat-value {
   font-size: 28px;
   font-weight: bold;
-  color: #00c853;
   margin: 0;
+  color: #333;
 }
 
 .visitors-table-container {
-  background-color: #fff;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
 }
 
 .visitors-table-container h2 {
-  margin-top: 0;
-  margin-bottom: 20px;
-  font-size: 18px;
-  color: #333;
+  margin-bottom: 15px;
 }
 
 .table-responsive {
@@ -57,26 +50,23 @@
 .visitors-table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 10px;
 }
 
 .visitors-table th,
 .visitors-table td {
   padding: 12px 15px;
   text-align: left;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #ddd;
 }
 
 .visitors-table th {
-  background-color: #f9f9f9;
-  font-weight: 600;
+  background-color: #f8f9fa;
+  font-weight: bold;
   color: #333;
 }
 
-.visitors-table tr:last-child td {
-  border-bottom: none;
-}
-
-.visitors-table tr:hover td {
+.visitors-table tr:hover {
   background-color: #f5f5f5;
 }
 

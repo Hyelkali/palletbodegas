@@ -3,34 +3,21 @@
 import { useState, useEffect } from "react"
 import { collection, onSnapshot, query, orderBy, limit } from "firebase/firestore"
 import { db } from "../../firebase/config"
-import { getVisitorStats } from "../../services/visitorService"
 import "./Viewers.css"
 
 const Viewers = () => {
   const [visitors, setVisitors] = useState([])
   const [stats, setStats] = useState({
-    totalVisits: 0,
-    todayVisits: 0,
-    weekVisits: 0,
+    total: 0,
+    today: 0,
+    lastWeek: 0,
     uniqueIPs: 0,
   })
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Get visitor statistics
-    const fetchStats = async () => {
-      try {
-        const visitorStats = await getVisitorStats()
-        setStats(visitorStats)
-      } catch (error) {
-        console.error("Error fetching stats:", error)
-      }
-    }
-
-    fetchStats()
-
-    // Set up real-time listener for visitors
     try {
+      // Set up real-time listener for visitors
       const visitorsRef = collection(db, "visitors")
       const visitorsQuery = query(visitorsRef, orderBy("timestamp", "desc"), limit(100))
 
@@ -44,6 +31,23 @@ const Viewers = () => {
           }))
 
           setVisitors(visitorData)
+
+          // Calculate statistics
+          const now = new Date()
+          const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+          const lastWeek = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
+
+          const todayVisits = visitorData.filter((v) => v.timestamp >= today).length
+          const lastWeekVisits = visitorData.filter((v) => v.timestamp >= lastWeek).length
+          const uniqueIPs = new Set(visitorData.map((v) => v.ip)).size
+
+          setStats({
+            total: visitorData.length,
+            today: todayVisits,
+            lastWeek: lastWeekVisits,
+            uniqueIPs,
+          })
+
           setLoading(false)
         },
         (error) => {
@@ -71,17 +75,17 @@ const Viewers = () => {
       <div className="stats-cards">
         <div className="stat-card">
           <h3>Total Visits</h3>
-          <p className="stat-value">{stats.totalVisits}</p>
+          <p className="stat-value">{stats.total}</p>
         </div>
 
         <div className="stat-card">
           <h3>Today's Visits</h3>
-          <p className="stat-value">{stats.todayVisits}</p>
+          <p className="stat-value">{stats.today}</p>
         </div>
 
         <div className="stat-card">
           <h3>Last 7 Days</h3>
-          <p className="stat-value">{stats.weekVisits}</p>
+          <p className="stat-value">{stats.lastWeek}</p>
         </div>
 
         <div className="stat-card">
