@@ -1,0 +1,208 @@
+.admin-orders {
+    padding: 2rem 0;
+  }
+  
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+  }
+  
+  .error-message {
+    padding: 1rem;
+    background-color: rgba(255, 77, 77, 0.1);
+    color: #ff4d4d;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+  
+  .loading-indicator {
+    padding: 2rem;
+    text-align: center;
+    color: var(--color-text);
+    opacity: 0.7;
+  }
+  
+  .empty-state {
+    padding: 2rem;
+    text-align: center;
+    color: var(--color-text);
+    opacity: 0.7;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+  }
+  
+  .orders-table-container {
+    overflow-x: auto;
+  }
+  
+  .orders-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .orders-table th,
+  .orders-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .orders-table th {
+    font-weight: 600;
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  .status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  
+  .status-pending {
+    background-color: #f59e0b;
+    color: #000;
+  }
+  
+  .status-approved {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+  }
+  
+  .status-rejected {
+    background-color: #ff4d4d;
+    color: white;
+  }
+  
+  .status-shipped {
+    background-color: #3b82f6;
+    color: white;
+  }
+  
+  .status-delivered {
+    background-color: #10b981;
+    color: white;
+  }
+  
+  .view-button {
+    padding: 0.5rem 1rem;
+    background-color: var(--color-text);
+    color: var(--color-background);
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  /* Order Modal Styles */
+  .order-modal {
+    max-width: 800px;
+  }
+  
+  .order-details {
+    padding: 1.5rem;
+  }
+  
+  .order-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .info-group h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .info-group p {
+    margin-bottom: 0.5rem;
+  }
+  
+  .order-items {
+    margin-bottom: 2rem;
+  }
+  
+  .order-items h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .items-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .items-table th,
+  .items-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .items-table th {
+    font-weight: 600;
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  .order-actions h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .status-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .status-button {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-border);
+    background-color: transparent;
+    color: var(--color-text);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .status-button:hover:not(:disabled) {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .status-button.active {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    border-color: var(--color-primary);
+  }
+  
+  .status-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  @media (max-width: 992px) {
+    .order-info {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .order-info {
+      grid-template-columns: 1fr;
+    }
+  
+    .status-buttons {
+      flex-direction: column;
+    }
+  }
+  
+  

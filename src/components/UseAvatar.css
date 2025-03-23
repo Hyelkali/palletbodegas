@@ -1,0 +1,70 @@
+.user-avatar-container {
+    position: relative;
+  }
+  
+  .user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    color: var(--color-background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  
+  .user-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px;
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 1rem;
+    margin-top: 0.5rem;
+    z-index: 100;
+    display: none;
+  }
+  
+  .user-avatar-container:hover .user-dropdown {
+    display: block;
+  }
+  
+  .user-info {
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 0.5rem;
+  }
+  
+  .user-email {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    word-break: break-all;
+  }
+  
+  .user-role {
+    font-size: 0.8rem;
+    opacity: 0.7;
+  }
+  
+  .logout-btn {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .logout-btn:hover {
+    background-color: rgba(255, 77, 77, 0.1);
+    border-color: #ff4d4d;
+    color: #ff4d4d;
+  }
+  
+  

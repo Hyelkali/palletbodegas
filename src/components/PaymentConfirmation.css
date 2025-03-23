@@ -1,0 +1,126 @@
+.payment-confirmation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.payment-modal {
+  width: 100%;
+  max-width: 500px;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.payment-header {
+  padding: 1.5rem;
+  background: var(--gradient-primary);
+  color: var(--color-background);
+}
+
+.payment-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.payment-content {
+  padding: 2rem;
+}
+
+.payment-amount {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.payment-instructions {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.payment-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.paid-button {
+  padding: 0.75rem;
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.paid-button:hover {
+  background-color: var(--color-secondary);
+}
+
+.cancel-button {
+  padding: 0.75rem;
+  background-color: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cancel-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.payment-waiting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-left-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.payment-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  color: var(--color-primary);
+}
+
+.payment-success svg {
+  stroke: var(--color-primary);
+}
+
+@media (max-width: 768px) {
+  .payment-modal {
+    max-width: 90%;
+  }
+}
+

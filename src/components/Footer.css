@@ -1,0 +1,134 @@
+.site-footer {
+  margin-top: 3rem;
+}
+
+.subscribe-section {
+  background: var(--gradient-primary);
+  padding: 3rem 0;
+  text-align: center;
+}
+
+.subscribe-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: var(--color-background);
+}
+
+.subscribe-text {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  color: var(--color-background);
+}
+
+.subscribe-form {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.form-group {
+  display: flex;
+  position: relative;
+}
+
+.subscribe-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: none;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-size: 1rem;
+  border-radius: 0;
+}
+
+.subscribe-button {
+  background-color: var(--color-background);
+  border: none;
+  color: var(--color-text);
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.subscribe-success {
+  margin-top: 0.5rem;
+  color: var(--color-background);
+  font-weight: 500;
+}
+
+.footer-main {
+  background-color: var(--color-background);
+  padding: 2rem 0;
+}
+
+.footer-shop {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.follow-button {
+  background: none;
+  border: none;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.payment-methods {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.payment-icon {
+  height: 24px;
+  width: auto;
+}
+
+.footer-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: var(--color-text);
+  opacity: 0.8;
+}
+
+.copyright {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.powered-by {
+  position: relative;
+  padding-left: 0.5rem;
+}
+
+.powered-by::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+}
+
+.footer-link {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .subscribe-title {
+    font-size: 2rem;
+  }
+
+  .footer-info {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+

@@ -1,0 +1,266 @@
+.admin-products {
+  padding: 2rem 0;
+}
+
+.products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.page-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.add-product-btn {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-product-btn:hover {
+  background-color: var(--color-secondary);
+}
+
+.error-message {
+  padding: 1rem;
+  background-color: rgba(255, 77, 77, 0.1);
+  color: #ff4d4d;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.loading-indicator {
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-text);
+  opacity: 0.7;
+}
+
+.empty-state {
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-text);
+  opacity: 0.7;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.admin-product-card {
+  position: relative;
+  border: 1px solid var(--color-border);
+  padding: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.admin-product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  gap: 0.5rem;
+}
+
+.edit-button,
+.delete-button {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.edit-button {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+}
+
+.delete-button {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: var(--color-background);
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid var(--color-border);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.close-modal {
+  background: none;
+  border: none;
+  color: var(--color-text);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.product-form {
+  padding: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.checkbox-row {
+  margin-bottom: 1rem;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0;
+}
+
+.checkbox-group input {
+  margin: 0;
+}
+
+.product-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.product-form input[type="text"],
+.product-form input[type="number"],
+.product-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  font-size: 1rem;
+}
+
+.product-form input[type="text"]:focus,
+.product-form input[type="number"]:focus,
+.product-form textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.image-preview {
+  margin-top: 1rem;
+  max-width: 200px;
+}
+
+.image-preview img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.cancel-button,
+.save-button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancel-button {
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.save-button {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+}
+
+.save-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 992px) {
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+/* Skeleton styles */
+.form-help {
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  opacity: 0.7;
+}
+
+/* git config --global user.email "hyelanamuninathan@gmail.com"
+git config --global user.name "Hyelkali" */

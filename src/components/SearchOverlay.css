@@ -1,0 +1,135 @@
+.search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 100px;
+  overflow-y: auto;
+}
+
+.search-container {
+  width: 100%;
+  max-width: 600px;
+  background-color: var(--color-background);
+  padding: 2rem;
+}
+
+.search-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.search-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.search-close {
+  background: none;
+  border: none;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.search-form {
+  margin-bottom: 1.5rem;
+}
+
+.search-input-group {
+  display: flex;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.search-input {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 0.75rem 0;
+  color: var(--color-text);
+  font-size: 1rem;
+}
+
+.search-input:focus {
+  outline: none;
+}
+
+.search-submit {
+  background: none;
+  border: none;
+  color: var(--color-text);
+  padding: 0 0.5rem;
+}
+
+.search-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 0;
+}
+
+.search-spinner {
+  width: 30px;
+  height: 30px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.search-results {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.results-list {
+  list-style: none;
+}
+
+.result-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--color-border);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.result-item:hover {
+  opacity: 0.8;
+}
+
+.result-name {
+  font-weight: 500;
+}
+
+.result-price {
+  font-weight: 600;
+}
+
+.no-results {
+  padding: 2rem 0;
+  text-align: center;
+  color: var(--color-text);
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .search-container {
+    padding: 1.5rem;
+  }
+}
