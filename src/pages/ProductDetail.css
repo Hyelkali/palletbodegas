@@ -1,0 +1,45 @@
+/* Fix product detail page responsiveness */
+.product-detail-page {
+  padding: 1rem 0;
+  margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  .product-detail-page {
+    padding: 2rem 0;
+  }
+}
+
+.product-detail {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .product-detail {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+}
+
+.product-images {
+  position: relative;
+  width: 100%;
+}
+
+.main-image {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #f8f8f8;
+  width: 100%;
+}
+
+.main-image img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+

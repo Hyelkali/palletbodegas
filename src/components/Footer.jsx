@@ -9,11 +9,11 @@ import "./Footer.css"
 const Footer = () => {
   const [email, setEmail] = useState("")
   const [isSubscribed, setIsSubscribed] = useState(false)
-  const [isFollowing, setIsFollowing] = useState(false); // Corrected variable name
+  const [isFollowing, setIsFollowing] = useState(false) // Corrected variable name
 
   const handleFollowClick = () => {
-    setIsFollowing(!isFollowing);
-  };
+    setIsFollowing(!isFollowing)
+  }
 
   const handleSubscribe = async (e) => {
     e.preventDefault()
@@ -24,13 +24,13 @@ const Footer = () => {
       // Send welcome email
       const msg = {
         to: email,
-        from: 'your-email@example.com', // Change this to your verified sender email
-        subject: 'Welcome to Our Newsletter!',
-        text: 'Thank you for subscribing! We will keep you updated with our latest news.',
-        html: '<strong>Thank you for subscribing!</strong> We will keep you updated with our latest news.',
-      };
+        from: "your-email@example.com", // Change this to your verified sender email
+        subject: "Welcome to Our Newsletter!",
+        text: "Thank you for subscribing! We will keep you updated with our latest news.",
+        html: "<strong>Thank you for subscribing!</strong> We will keep you updated with our latest news.",
+      }
 
-      await sgMail.send(msg);
+      await sgMail.send(msg)
 
       // Update local state
       setIsSubscribed(true)
@@ -106,7 +106,7 @@ const Footer = () => {
             </button>
           </div>
 
-          <div className="payment-methods">
+          <div className="payment-methods"  style={{ display: 'flex', flexWrap: 'wrap' }}>
             <img src="/images/payment/american-express.svg" alt="American Express" className="payment-icon" />
             <img src="/images/payment/apple-pay.svg" alt="Apple Pay" className="payment-icon" />
             <img src="/images/payment/diners-club.svg" alt="Diners Club" className="payment-icon" />
@@ -133,3 +133,4 @@ const Footer = () => {
 }
 
 export default Footer
+

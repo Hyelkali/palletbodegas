@@ -1,6 +1,3 @@
-// src/pages/Support.jsx
-import React from 'react'
-
 const Support = () => {
   return (
     <div className="support-page">
@@ -13,3 +10,4 @@ const Support = () => {
 }
 
 export default Support
+

@@ -19,6 +19,7 @@ import Checkout from "./pages/Checkout"
 import ThankYou from "./pages/ThankYou"
 import AdminOrders from "./pages/admin/Orders"
 import Viewers from "./pages/admin/Viewers"
+import Transactions from "./pages/admin/Transactions"
 import AdminSetup from "./pages/AdminSetup"
 import { useAuth } from "./context/AuthContext"
 import { useEffect } from "react"
@@ -62,6 +63,7 @@ function App() {
           <Route index element={<AdminOrders />} />
           <Route path="orders" element={<AdminOrders />} />
           <Route path="viewers" element={<Viewers />} />
+          <Route path="transactions" element={<Transactions />} />
         </Route>
       </Route>
     </Routes>

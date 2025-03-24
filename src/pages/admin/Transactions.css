@@ -1,0 +1,244 @@
+.transactions-page {
+  padding: 2rem 0;
+}
+
+.page-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.transactions-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 200px;
+}
+
+.filter-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.filter-input,
+.filter-select {
+  padding: 0.75rem;
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  border-radius: 4px;
+}
+
+.filter-input:focus,
+.filter-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.filter-actions {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.filter-button {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.filter-button.secondary {
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.transactions-table-container {
+  overflow-x: auto;
+  margin-bottom: 2rem;
+}
+
+.transactions-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.transactions-table th,
+.transactions-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.transactions-table th {
+  font-weight: 600;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.transaction-status {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-success {
+  background-color: rgba(0, 255, 157, 0.2);
+  color: var(--color-primary);
+}
+
+.status-pending {
+  background-color: rgba(255, 193, 7, 0.2);
+  color: #ffc107;
+}
+
+.status-failed {
+  background-color: rgba(255, 77, 77, 0.2);
+  color: #ff4d4d;
+}
+
+.view-details-button {
+  padding: 0.5rem 1rem;
+  background-color: var(--color-text);
+  color: var(--color-background);
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.transaction-modal {
+  max-width: 800px;
+}
+
+.transaction-details {
+  padding: 1.5rem;
+}
+
+.transaction-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.info-group h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.info-group p {
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.info-group p span:first-child {
+  opacity: 0.7;
+}
+
+.transaction-response {
+  margin-top: 2rem;
+}
+
+.response-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.response-code {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 4px;
+  font-family: monospace;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.pagination-button {
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination-button:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.pagination-button.active {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border-color: var(--color-primary);
+}
+
+.pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.loading-indicator,
+.empty-state {
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-text);
+  opacity: 0.7;
+}
+
+.error-message {
+  padding: 1rem;
+  background-color: rgba(255, 77, 77, 0.1);
+  color: #ff4d4d;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .transaction-info {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-group {
+    min-width: 100%;
+  }
+
+  .filter-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+

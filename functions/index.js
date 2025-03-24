@@ -7,25 +7,25 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
-const {onRequest} = require("firebase-functions/v2/https");
-const logger = require("firebase-functions/logger");
+const { onRequest } = require("firebase-functions/v2/https")
+const logger = require("firebase-functions/logger")
 
-const functions = require("firebase-functions");
-const nodemailer = require("nodemailer");
+const functions = require("firebase-functions")
+const nodemailer = require("nodemailer")
 
 // Set up nodemailer transport (example using Gmail)
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "hyelnamunianthan@gmail.com",  // Your email address
-    pass: "pallet123"    // Your email password or app password
-  }
-});
+    user: "hyelnamunianthan@gmail.com", // Your email address
+    pass: "pallet123", // Your email password or app password
+  },
+})
 
 // Cloud Function to handle sending email
 exports.sendPasswordResetEmail = functions.auth.user().onCreate((user) => {
-  const email = user.email;  // Get the user's email
-  const resetLink = `https://pallet-bodega-shop.firebaseapp.com/__/auth/action?mode=action&oobCode=${user.oobCode}`;
+  const email = user.email // Get the user's email
+  const resetLink = `https://pallet-bodega-shop.firebaseapp.com/__/auth/action?mode=action&oobCode=${user.oobCode}`
 
   const mailOptions = {
     from: "hyelnamunianthan@gmail.com",
@@ -45,17 +45,18 @@ exports.sendPasswordResetEmail = functions.auth.user().onCreate((user) => {
           </div>
         </body>
       </html>
-    `
-  };
+    `,
+  }
 
-  return transporter.sendMail(mailOptions)
+  return transporter
+    .sendMail(mailOptions)
     .then(() => {
-      console.log('Password reset email sent to:', email);
+      console.log("Password reset email sent to:", email)
     })
     .catch((error) => {
-      console.error('Error sending email:', error);
-    });
-});
+      console.error("Error sending email:", error)
+    })
+})
 
 // Create and deploy your first functions
 // https://firebase.google.com/docs/functions/get-started
@@ -64,3 +65,4 @@ exports.sendPasswordResetEmail = functions.auth.user().onCreate((user) => {
 //   logger.info("Hello logs!", {structuredData: true});
 //   response.send("Hello from Firebase!");
 // });
+

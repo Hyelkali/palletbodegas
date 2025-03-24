@@ -6,12 +6,11 @@
 .hero-banner {
   position: relative;
   width: 100%;
-  height: 600px;
-  background-image: url("https://www.palletbodega.com/cdn/shop/files/DALL_E_2024-10-31_10.05.17_-_A_realistic_Amazon_clearance_sale_scene_showcasing_a_variety_of_items_arranged_on_large_tables._The_items_include_real-world_electronics_toys_small_f9640072-c298-4049-b08c-cebd9a1aa729.webp?v=1730387148&width=3840?height=500&width=1200");
+  height: 300px;
   background-size: cover;
   background-position: center;
   background-color: #1a1a1a;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   overflow: hidden;
 }
 
@@ -94,9 +93,8 @@
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-  margin-bottom: 2rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
 }
 
 .view-all-container {
@@ -172,28 +170,42 @@
 }
 
 /* Responsive Styles */
-@media (max-width: 992px) {
+@media (min-width: 480px) {
+  .products-grid {
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-banner {
+    height: 400px;
+    margin-bottom: 3rem;
+  }
+
   .products-grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .hero-banner {
+    height: 500px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
   }
 }
 
 @media (max-width: 768px) {
-  .hero-banner {
-    height: 400px;
-  }
-
   .hero-text {
     max-width: 100%;
   }
 
   .hero-text h1 {
     font-size: 2rem;
-  }
-
-  .products-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
   }
 
   .section-title,
@@ -213,11 +225,6 @@
 
   .hero-text h1 {
     font-size: 1.5rem;
-  }
-
-  .products-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
   }
 }
 

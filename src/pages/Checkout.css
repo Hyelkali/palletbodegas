@@ -9,10 +9,18 @@
   text-align: center;
 }
 
+/* Fix checkout page responsiveness */
 .checkout-container {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 2rem;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .checkout-container {
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+  }
 }
 
 .checkout-form-container {
@@ -31,8 +39,14 @@
 
 .form-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 1rem;
+}
+
+@media (min-width: 480px) {
+  .form-row {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .form-group {
@@ -216,15 +230,12 @@
 }
 
 @media (max-width: 768px) {
-  .checkout-container {
-    grid-template-columns: 1fr;
-  }
-  
   .checkout-form-container {
     padding-right: 0;
   }
-  
+
   .order-summary {
     margin-top: 2rem;
   }
 }
+

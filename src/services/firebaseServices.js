@@ -62,6 +62,20 @@ export const createOrder = async (orderData) => {
     // Get the created order
     const newOrder = await getDoc(orderRef)
 
+    // Create a transaction record
+    if (orderData.transactionId) {
+      await addDoc(collection(db, "transactions"), {
+        orderId: orderRef.id,
+        transactionId: orderData.transactionId,
+        customerEmail: orderData.customerEmail,
+        customerId: orderData.customerId,
+        amount: orderData.totalAmount,
+        paymentMethod: orderData.paymentMethod || "flutterwave",
+        status: "pending",
+        createdAt: serverTimestamp(),
+      })
+    }
+
     return {
       id: newOrder.id,
       ...newOrder.data(),
@@ -91,6 +105,19 @@ export const updateOrderStatus = async (orderId, status, userId) => {
 
     await updateDoc(orderRef, updateData)
 
+    // Update associated transaction if exists
+    const transactionsQuery = query(collection(db, "transactions"), where("orderId", "==", orderId))
+
+    const transactionSnapshot = await getDocs(transactionsQuery)
+
+    if (!transactionSnapshot.empty) {
+      const transactionDoc = transactionSnapshot.docs[0]
+      await updateDoc(doc(db, "transactions", transactionDoc.id), {
+        status: status === "approved" ? "success" : status === "rejected" ? "failed" : "pending",
+        updatedAt: serverTimestamp(),
+      })
+    }
+
     // Get the updated order
     const updatedOrder = await getDoc(orderRef)
 
@@ -100,6 +127,79 @@ export const updateOrderStatus = async (orderId, status, userId) => {
     }
   } catch (error) {
     console.error("Error updating order status:", error)
+    throw error
+  }
+}
+
+// Verify payment transaction
+export const verifyTransaction = async (transactionId) => {
+  try {
+    // In a real implementation, you would call Flutterwave API to verify the transaction
+    // For demo purposes, we'll simulate a successful verification
+    const verificationResult = {
+      status: "success",
+      transactionId,
+      amount: 100.0,
+      currency: "USD",
+      customer: {
+        email: "customer@example.com",
+      },
+    }
+
+    // Record the verification result
+    const transactionsQuery = query(collection(db, "transactions"), where("transactionId", "==", transactionId))
+
+    const transactionSnapshot = await getDocs(transactionsQuery)
+
+    if (!transactionSnapshot.empty) {
+      const transactionDoc = transactionSnapshot.docs[0]
+      await updateDoc(doc(db, "transactions", transactionDoc.id), {
+        status: verificationResult.status,
+        responseData: verificationResult,
+        updatedAt: serverTimestamp(),
+      })
+    }
+
+    return verificationResult
+  } catch (error) {
+    console.error("Error verifying transaction:", error)
+
+    // Record the error
+    const transactionsQuery = query(collection(db, "transactions"), where("transactionId", "==", transactionId))
+
+    const transactionSnapshot = await getDocs(transactionsQuery)
+
+    if (!transactionSnapshot.empty) {
+      const transactionDoc = transactionSnapshot.docs[0]
+      await updateDoc(doc(db, "transactions", transactionDoc.id), {
+        status: "failed",
+        errorMessage: error.message || "Verification failed",
+        updatedAt: serverTimestamp(),
+      })
+    }
+
+    throw error
+  }
+}
+
+// Get transactions
+export const getTransactions = async () => {
+  try {
+    const transactionsSnapshot = await getDocs(query(collection(db, "transactions"), orderBy("createdAt", "desc")))
+
+    const transactions = []
+
+    transactionsSnapshot.forEach((doc) => {
+      transactions.push({
+        id: doc.id,
+        ...doc.data(),
+        createdAt: doc.data().createdAt?.toDate() || new Date(),
+      })
+    })
+
+    return transactions
+  } catch (error) {
+    console.error("Error getting transactions:", error)
     throw error
   }
 }
@@ -158,144 +258,4 @@ export const getPendingOrders = async () => {
     throw error
   }
 }
-
-
-
-// // Mock data storage
-// let orders = []
-
-// // Orders
-// export const getOrders = async () => {
-//   // Get orders from localStorage
-//   const storedOrders = localStorage.getItem("orders")
-//   if (storedOrders) {
-//     orders = JSON.parse(storedOrders)
-//   }
-//   return orders
-// }
-
-// export const getOrderById = async (orderId) => {
-//   // Get orders from localStorage
-//   const storedOrders = localStorage.getItem("orders")
-//   if (storedOrders) {
-//     orders = JSON.parse(storedOrders)
-//   }
-
-//   const order = orders.find((o) => o.id === orderId)
-//   if (!order) {
-//     throw new Error("Order not found")
-//   }
-
-//   return order
-// }
-
-// export const createOrder = async (orderData) => {
-//   // Get orders from localStorage
-//   const storedOrders = localStorage.getItem("orders")
-//   if (storedOrders) {
-//     orders = JSON.parse(storedOrders)
-//   }
-
-//   const orderId = `order_${Date.now()}`
-//   const newOrder = {
-//     id: orderId,
-//     ...orderData,
-//     status: "pending",
-//     createdAt: new Date().toISOString(),
-//     updatedAt: new Date().toISOString(),
-//   }
-
-//   orders.push(newOrder)
-//   localStorage.setItem("orders", JSON.stringify(orders))
-
-//   return newOrder
-// }
-
-// export const updateOrderStatus = async (orderId, status, userId) => {
-//   // Get orders from localStorage
-//   const storedOrders = localStorage.getItem("orders")
-//   if (storedOrders) {
-//     orders = JSON.parse(storedOrders)
-//   }
-
-//   const orderIndex = orders.findIndex((o) => o.id === orderId)
-//   if (orderIndex === -1) {
-//     throw new Error("Order not found")
-//   }
-
-//   const updatedOrder = {
-//     ...orders[orderIndex],
-//     status,
-//     updatedAt: new Date().toISOString(),
-//   }
-
-//   if (status === "approved") {
-//     updatedOrder.approvedBy = userId
-//     updatedOrder.approvedAt = new Date().toISOString()
-//   } else if (status === "rejected") {
-//     updatedOrder.rejectedBy = userId
-//     updatedOrder.rejectedAt = new Date().toISOString()
-//   }
-
-//   orders[orderIndex] = updatedOrder
-//   localStorage.setItem("orders", JSON.stringify(orders))
-
-//   return updatedOrder
-// }
-
-// // Users
-// export const getUserById = async (userId) => {
-//   // Check predefined users
-//   const predefinedUsers = [
-//     {
-//       uid: "admin123",
-//       email: "admin@palletbodega.com",
-//       role: "admin",
-//       createdAt: new Date().toISOString(),
-//     },
-//     {
-//       uid: "user123",
-//       email: "user@example.com",
-//       role: "customer",
-//       createdAt: new Date().toISOString(),
-//     },
-//   ]
-
-//   const predefinedUser = predefinedUsers.find((u) => u.uid === userId)
-//   if (predefinedUser) {
-//     return predefinedUser
-//   }
-
-//   // Check registered users
-//   const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]")
-//   const user = registeredUsers.find((u) => u.uid === userId)
-
-//   if (!user) {
-//     throw new Error("User not found")
-//   }
-
-//   // Remove password before returning
-//   const { password, ...userWithoutPassword } = user
-//   return userWithoutPassword
-// }
-
-// export const updateUserRole = async (userId, role) => {
-//   // Check registered users
-//   const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]")
-//   const userIndex = registeredUsers.findIndex((u) => u.uid === userId)
-
-//   if (userIndex >= 0) {
-//     registeredUsers[userIndex].role = role
-//     localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers))
-//   }
-
-//   // If it's the current user, update the current user in localStorage
-//   const currentUser = JSON.parse(localStorage.getItem("currentUser") || "null")
-//   if (currentUser && currentUser.uid === userId) {
-//     currentUser.role = role
-//     localStorage.setItem("currentUser", JSON.stringify(currentUser))
-//   }
-
-//   return true
-// }
 

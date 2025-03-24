@@ -1,6 +1,7 @@
 .product-card {
   position: relative;
   transition: transform 0.3s ease;
+  width: 100%;
 }
 
 .product-card:hover {
@@ -16,8 +17,9 @@
   overflow: hidden;
   aspect-ratio: 1 / 1;
   background-color: #1a1a1a;
- margin-bottom: 1rem;
- border-radius: 10px;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  width: 100%;
 }
 
 .product-image {
@@ -57,7 +59,7 @@
 }
 
 .product-name {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 500;
   margin-bottom: 0.5rem;
   color: var(--color-text);
@@ -87,6 +89,12 @@
 @media (max-width: 768px) {
   .product-name {
     font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 480px) {
+  .product-name {
+    font-size: 1rem;
   }
 }
 

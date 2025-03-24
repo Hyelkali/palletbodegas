@@ -1,0 +1,245 @@
+.payment-gateway {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  overflow-y: auto;
+  max-height: 60vh; /* Limit height and enable scrolling */
+}
+
+.payment-methods {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .payment-methods {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.payment-method {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.payment-method:hover {
+  border-color: var(--color-primary);
+  background-color: rgba(0, 255, 157, 0.05);
+}
+
+.payment-method.selected {
+  border-color: var(--color-primary);
+  background-color: rgba(0, 255, 157, 0.1);
+}
+
+.payment-method-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text);
+}
+
+.payment-method-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.payment-details {
+  margin-top: 1.5rem;
+}
+
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.form-input {
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  background-color: transparent;
+  color: var(--color-text);
+  border-radius: 4px;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.card-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.payment-actions {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: sticky;
+  bottom: 0;
+  padding-top: 1rem;
+  background-color: var(--color-background);
+}
+
+.pay-button {
+  padding: 1rem;
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pay-button:hover {
+  background-color: var(--color-secondary);
+}
+
+.pay-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.cancel-button {
+  padding: 1rem;
+  background-color: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.cancel-button:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.payment-error {
+  color: #ff4d4d;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.payment-info {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: rgba(0, 255, 157, 0.1);
+  border: 1px solid var(--color-primary);
+  border-radius: 4px;
+}
+
+.payment-info p {
+  margin-bottom: 0.5rem;
+}
+
+.payment-info strong {
+  font-weight: 600;
+}
+
+.bank-details {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.bank-details p {
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.bank-details p span:last-child {
+  font-weight: 600;
+}
+
+.copy-button {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  cursor: pointer;
+  padding: 0;
+  margin-left: 0.5rem;
+}
+
+.gift-card-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.gift-card-input {
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  background-color: transparent;
+  color: var(--color-text);
+  border-radius: 4px;
+  font-family: monospace;
+  letter-spacing: 0.2em;
+}
+
+.gift-card-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.verify-button {
+  padding: 0.75rem;
+  background-color: var(--color-text);
+  color: var(--color-background);
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.verify-button:hover {
+  background-color: var(--color-primary);
+}
+
+.payment-logo {
+  height: 24px;
+  margin-bottom: 0.5rem;
+}
+
+.payment-powered-by {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  opacity: 0.7;
+  font-size: 0.8rem;
+}
+
+.payment-powered-by img {
+  height: 20px;
+  margin-left: 0.5rem;
+}
+

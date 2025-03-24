@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { createOrder, getOrderById } from "../services/firebaseServices"
 import { useAuth } from "../context/AuthContext"
+import PaymentGateway from "./PaymentGateway"
 import "./PaymentConfirmation.css"
 
 const PaymentConfirmation = ({ amount, items, shippingAddress, onConfirm, onCancel }) => {
@@ -11,7 +12,61 @@ const PaymentConfirmation = ({ amount, items, shippingAddress, onConfirm, onCanc
   const [isConfirmed, setIsConfirmed] = useState(false)
   const [orderId, setOrderId] = useState(null)
   const [error, setError] = useState("")
+  const [showPaymentGateway, setShowPaymentGateway] = useState(true)
   const { user } = useAuth()
+
+  const handlePaymentSuccess = async (transactionId) => {
+    try {
+      setIsPaid(true)
+      setIsWaiting(true)
+
+      // Create order in Firebase
+      const orderData = {
+        customerEmail: user.email,
+        customerId: user.uid,
+        items,
+        totalAmount: amount,
+        shippingAddress,
+        status: "pending",
+        transactionId,
+        paymentMethod: "flutterwave",
+      }
+
+      const order = await createOrder(orderData)
+      setOrderId(order.id)
+
+      // Start polling for order status
+      const intervalId = setInterval(async () => {
+        try {
+          const updatedOrder = await getOrderById(order.id)
+
+          if (updatedOrder.status === "approved") {
+            clearInterval(intervalId)
+            setIsConfirmed(true)
+            setIsWaiting(false)
+
+            // Call the onConfirm callback after a short delay
+            setTimeout(() => {
+              onConfirm(order.id)
+            }, 2000)
+          } else if (updatedOrder.status === "rejected") {
+            clearInterval(intervalId)
+            setIsWaiting(false)
+            setError("Your payment was rejected. Please try again or contact support.")
+          }
+        } catch (err) {
+          console.error("Error checking order status:", err)
+        }
+      }, 5000) // Check every 5 seconds
+
+      // Clean up interval on component unmount
+      return () => clearInterval(intervalId)
+    } catch (err) {
+      console.error("Error creating order:", err)
+      setIsWaiting(false)
+      setError("There was an error processing your payment. Please try again.")
+    }
+  }
 
   const handlePaidClick = async () => {
     try {
@@ -64,6 +119,10 @@ const PaymentConfirmation = ({ amount, items, shippingAddress, onConfirm, onCanc
     }
   }
 
+  const handlePaymentCancel = () => {
+    setShowPaymentGateway(false)
+  }
+
   return (
     <div className="payment-confirmation">
       <div className="payment-modal">
@@ -74,7 +133,14 @@ const PaymentConfirmation = ({ amount, items, shippingAddress, onConfirm, onCanc
         <div className="payment-content">
           <p className="payment-amount">Amount: ${amount.toFixed(2)} USD</p>
 
-          {!isPaid ? (
+          {showPaymentGateway && !isPaid ? (
+            <PaymentGateway
+              amount={amount}
+              onSuccess={handlePaymentSuccess}
+              onCancel={onCancel}
+              customerInfo={shippingAddress}
+            />
+          ) : !isPaid ? (
             <div className="payment-actions">
               <p className="payment-instructions">
                 Please complete your payment using your preferred method, then click the button below to confirm.

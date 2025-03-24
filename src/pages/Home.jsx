@@ -59,7 +59,10 @@ const Home = () => {
         <div className="featured-product">
           <div className="featured-product-grid">
             <div className="featured-product-image">
-              <img src="https://www.palletbodega.com/cdn/shop/files/Export_photo_1.png?v=1728588280&width=990?height=400&width=400&text=Clothing+Box+1" alt="Sam's Club Clothing Box" />
+              <img
+                src="https://www.palletbodega.com/cdn/shop/files/Export_photo_1.png?v=1728588280&width=990?height=400&width=400&text=Clothing+Box+1"
+                alt="Sam's Club Clothing Box"
+              />
             </div>
 
             <div className="featured-product-details">

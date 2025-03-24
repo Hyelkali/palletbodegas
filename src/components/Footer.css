@@ -1,18 +1,32 @@
+/* Fix footer positioning */
 .site-footer {
-  margin-top: 3rem;
+  margin-top: 2rem;
+  width: 100%;
 }
 
 .subscribe-section {
   background: var(--gradient-primary);
-  padding: 3rem 0;
+  padding: 2rem 0;
   text-align: center;
 }
 
+@media (min-width: 768px) {
+  .subscribe-section {
+    padding: 3rem 0;
+  }
+}
+
 .subscribe-title {
-  font-size: 2.5rem;
+  font-size: 1.8rem;
   font-weight: 800;
   margin-bottom: 1rem;
   color: var(--color-background);
+}
+
+@media (min-width: 768px) {
+  .subscribe-title {
+    font-size: 2.5rem;
+  }
 }
 
 .subscribe-text {
@@ -24,11 +38,28 @@
 .subscribe-form {
   max-width: 500px;
   margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .form-group {
   display: flex;
   position: relative;
+}
+
+@media (max-width: 480px) {
+  .form-group {
+    flex-direction: column;
+  }
+
+  .subscribe-input {
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+  }
+
+  .subscribe-button {
+    border-radius: 4px;
+    width: 100%;
+  }
 }
 
 .subscribe-input {
@@ -80,9 +111,10 @@
 
 .payment-methods {
   display: flex;
+  flex-direction: row;
   justify-content: center;
-  gap: 1rem;
   flex-wrap: wrap;
+  gap: 1rem;
   margin-bottom: 1.5rem;
 }
 

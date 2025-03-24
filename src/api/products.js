@@ -4,13 +4,13 @@ const products = [
   {
     id: 1,
     name: "Auto Clicker for Phone",
-    price: 12.99,
+    price: 82.99,
     originalPrice: 39.99,
     description:
       "Automate repetitive tasks on your phone with this convenient auto clicker. Perfect for games and applications that require repeated tapping.",
     images: [
-     "https://www.palletbodega.com/cdn/shop/files/Screenshot_2024-10-31_at_10.23.55_AM.png?v=1730388270?height=400&width=400&text=Auto+Clicker+1",
-     "https://www.palletbodega.com/cdn/shop/files/Screenshot_2024-10-31_at_10.23.40_AM.png?v=1730388271?height=400&width=400&text=Auto+Clicker+2",
+      "https://www.palletbodega.com/cdn/shop/files/Screenshot_2024-10-31_at_10.23.55_AM.png?v=1730388270?height=400&width=400&text=Auto+Clicker+1",
+      "https://www.palletbodega.com/cdn/shop/files/Screenshot_2024-10-31_at_10.23.40_AM.png?v=1730388271?height=400&width=400&text=Auto+Clicker+2",
     ],
     soldOut: false,
     sale: true,
@@ -20,7 +20,7 @@ const products = [
   {
     id: 2,
     name: "Drone with Camera Foldable Mini Drone",
-    price: 45.99,
+    price: 245.99,
     originalPrice: 179.99,
     description:
       "Foldable mini drone for kids and beginners with camera, gesture selfie, one key start, 360° flips, and 1020mAh rechargeable battery. Supports connecting to TV and two players. Perfect birthday gift toy.",
@@ -36,7 +36,7 @@ const products = [
   {
     id: 3,
     name: "Handheld Game Console",
-    price: 14.99,
+    price: 84.99,
     originalPrice: 49.99,
     description:
       "Portable retro game console with 400 classical FC games and intelligent screen charging case. Relive your childhood with this compact gaming device.",
@@ -57,8 +57,8 @@ const products = [
     description:
       "Surprise yourself with our limited edition makeup mystery boxes. Each box contains a curated selection of premium makeup products worth much more than the purchase price.",
     images: [
-     "https://www.palletbodega.com/cdn/shop/files/makeuponly.png?v=1727724881&width=720?height=400&width=400&text=Makeup+Box+1",
-     "https://www.palletbodega.com/cdn/shop/files/DSC09378.jpg?v=1727723560&width=720?height=400&width=400&text=Makeup+Box+2",
+      "https://www.palletbodega.com/cdn/shop/files/makeuponly.png?v=1727724881&width=720?height=400&width=400&text=Makeup+Box+1",
+      "https://www.palletbodega.com/cdn/shop/files/DSC09378.jpg?v=1727723560&width=720?height=400&width=400&text=Makeup+Box+2",
     ],
     soldOut: false,
     sale: false,
@@ -68,7 +68,7 @@ const products = [
   {
     id: 5,
     name: "Noise Cancelling Bluetooth Earbuds",
-    price: 24.99,
+    price: 98.99,
     originalPrice: 89.99,
     description:
       "White noise cancelling bluetooth earbuds with big touch intelligent screen charging case. Enjoy crystal clear audio without distractions.",
@@ -89,9 +89,9 @@ const products = [
     description:
       "Our large mystery box contains a variety of premium products across multiple categories. Each box is carefully curated to ensure maximum value and excitement.",
     images: [
-      "https://www.palletbodega.com/cdn/shop/files/Large_PIC.png?v=1726955743?height=400&width=400&text=Large+Box+1"
+      "https://www.palletbodega.com/cdn/shop/files/Large_PIC.png?v=1726955743?height=400&width=400&text=Large+Box+1",
     ],
-    soldOut: true,
+    soldOut: false,
     sale: false,
     category: "mystery",
     featured: true,
@@ -104,9 +104,9 @@ const products = [
     description:
       "Our medium mystery box offers a balanced selection of quality products at a great value. Perfect for those who want to try something new without committing to the large box.",
     images: [
-      "https://www.palletbodega.com/cdn/shop/files/pallet_bode_med.png?v=1726955400?height=400&width=400&text=Medium+Box+1"
+      "https://www.palletbodega.com/cdn/shop/files/pallet_bode_med.png?v=1726955400?height=400&width=400&text=Medium+Box+1",
     ],
-    soldOut: true,
+    soldOut: false,
     sale: false,
     category: "mystery",
     featured: true,
@@ -119,9 +119,9 @@ const products = [
     description:
       "Our small mystery box is an affordable way to experience the thrill of unboxing surprise products. Great as a gift or a treat for yourself.",
     images: [
-      "https://www.palletbodega.com/cdn/shop/files/Pallet_bd_small_0debe103-5c59-499f-9275-af1d837bb680.png?v=1726955439&width=533"
+      "https://www.palletbodega.com/cdn/shop/files/Pallet_bd_small_0debe103-5c59-499f-9275-af1d837bb680.png?v=1726955439&width=533",
     ],
-    soldOut: true,
+    soldOut: false,
     sale: false,
     category: "mystery",
     featured: true,
@@ -129,7 +129,7 @@ const products = [
   {
     id: 9,
     name: "Portable Wireless Speaker",
-    price: 34.99,
+    price: 99.99,
     originalPrice: 89.99,
     description:
       "Compact wireless speaker with powerful sound and long battery life. Perfect for outdoor activities, travel, or home use.",
@@ -145,7 +145,7 @@ const products = [
   {
     id: 10,
     name: "Power Bank Wireless Charger 10000mAh",
-    price: 27.99,
+    price: 87.99,
     originalPrice: 59.99,
     description:
       "10000mAh power bank with built-in 3 solar panels for fast charging. This solar charger is perfect for outdoor activities and emergency situations.",

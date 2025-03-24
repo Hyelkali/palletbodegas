@@ -9,6 +9,8 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding: 2rem 0;
 }
 
 .payment-modal {
@@ -18,12 +20,19 @@
   border: 1px solid var(--color-border);
   border-radius: 10px;
   overflow: hidden;
+  max-height: 90vh; /* Limit height to 90% of viewport */
+  display: flex;
+  flex-direction: column;
+  margin: auto;
 }
 
 .payment-header {
   padding: 1.5rem;
   background: var(--gradient-primary);
   color: var(--color-background);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .payment-title {
@@ -34,6 +43,8 @@
 
 .payment-content {
   padding: 2rem;
+  overflow-y: auto; /* Enable scrolling for content */
+  flex: 1;
 }
 
 .payment-amount {
@@ -52,6 +63,10 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  position: sticky;
+  bottom: 0;
+  padding-top: 1rem;
+  background-color: var(--color-background);
 }
 
 .paid-button {

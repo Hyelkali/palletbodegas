@@ -50,7 +50,11 @@ const Header = () => {
   console.log("Header rendering, isAdmin:", isAdmin, "user email:", user?.email)
 
   return (
+    
     <header className={`site-header ${isScrolled ? "scrolled" : ""}`}>
+       <div className="announcement-bar">
+      <div className="announcement-content">WELCOME TO OUR STORE</div>
+    </div>
       <div className="container header-container">
         <div className="logo-container">
           <Link to="/" className="logo">
